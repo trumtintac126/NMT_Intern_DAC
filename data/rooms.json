@@ -1,0 +1,26 @@
+[
+    {
+        "room" : 101,
+        "availible" : false
+    },
+    {
+        "room" : 102,
+        "availible" : true
+    },
+    {
+        "room" : 103,
+        "availible" : false
+    },
+    {
+        "room" : 104,
+        "availible" : true
+    },
+    {
+        "room" : 105,
+        "availible" : true
+    },
+    {
+        "room" : 106,
+        "availible" : false
+    }
+]
