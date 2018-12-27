@@ -1,9 +1,10 @@
 <?php
     if(isset($_POST["id"]) && !empty($_POST["id"])){
 
+
         require_once "config.php";
         
-        $sql = "DELETE FROM employees WHERE id = ?";
+        $sql = "DELETE FROM customers WHERE id = ?";
         
         if($stmt = $conn->prepare($sql)){
 
@@ -17,6 +18,7 @@
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
+            
         }
         
         $stmt ->close();
@@ -43,7 +45,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h1>Delete Customer ID = <?php echo trim($_GET["id"]); ?></h1>
+                        <h1>Delete Customer</h1>
                     </div>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="alert alert-danger fade in">

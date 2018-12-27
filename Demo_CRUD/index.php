@@ -1,79 +1,72 @@
+<?php
+    session_start();
+    require_once "config.php";
+    $sql = "SELECT * FROM customers";
+    if($result = $conn->query($sql)){
+
+    }
+    $conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
     <link href="./css/style.css" rel="stylesheet" media="screen">
-
-    <!-- <script type="text/javascript">
-        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();   
-        });
-    </script> -->
 </head>
 <body>
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-offset-2 col-md-8">
                     <div class="page-header clearfix">
-                        <h2 class="pull-left">Employees Details</h2>
-                        <a href="#" class="btn btn-success pull-right">Add New Employee</a>
+                        <h2>Hello <?php echo $_SESSION["email"]; ?> </h2>
+                        <h2 class="pull-left">Employees Details</h2> <span></span>
+                        <a href="add.php" class="btn btn-success pull-right">Add New Employee</a>
                     </div>
-                    <?php
-                    // Include config file
-                    require_once "config.php";
-                    
-                    // Attempt select query execution
-                    $sql = "SELECT * FROM customers";
-                    if($result = mysqli_query($conn, $sql)){
-                        if(mysqli_num_rows($result) > 0){
-                            echo "<table class='table table-bordered table-striped'>";
-                                echo "<thead>";
-                                    echo "<tr>";
-                                        echo "<th>ID</th>";
-                                        echo "<th>Email</th>";
-                                        echo "<th>First_name</th>";
-                                        echo "<th>Last_Name</th>";
-                                        echo "<th>Gender</th>";
-                                        echo "<th>Addess</th>";
-                                        echo "<th>Action</th>";
-                                    echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-                                while($row = mysqli_fetch_array($result)){
-                                    echo "<tr>";
-                                        echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td>" . $row['email'] . "</td>";
-                                        echo "<td>" . $row['first_name'] . "</td>";
-                                        echo "<td>" . $row['last_name'] . "</td>";
-                                        echo "<td>" . $row['gender'] . "</td>";
-                                        echo "<td>" . $row['address'] . "</td>";
-                                        echo "<td>";
-                                            echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                            echo "<a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                            echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                                        echo "</td>";
-                                    echo "</tr>";
-                                }
-                                echo "</tbody>";                            
-                            echo "</table>";
-                            // Free result set
-                            mysqli_free_result($result);
-                        } else{
-                            echo "<p class='lead'><em>No records were found.</em></p>";
-                        }
-                    } else{
-                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
-                    }
- 
-                    //Close connection
-                    mysqli_close($conn);
-                    ?>
-                </div>  
+                        <table class='table table-bordered table-striped'>
+                                <?php if($result ->num_rows >0 ) { ?>
+                                <thead>
+                                   <tr>
+                                       <th>ID</th>
+                                        <th>Email</th>
+                                        <th>First_name</th>
+                                        <th>Last_Name</th>
+                                        <th>Gender</th>
+                                        <th>Addess</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <?php }else { ?>
+                                <?php 
+                                    echo "<h2>No record in table</h2>";
+                                } ?>
+                                <tbody>
+                                <?php while($row = mysqli_fetch_array($result)){ ?>
+                                   <tr>
+
+                                        <td> <?php echo $row["id"]; ?> </td>
+                                        <td> <?php echo $row["email"]; ?> </td>
+                                        <td> <?php echo $row["first_name"]; ?></td>
+                                        <td> <?php echo $row["last_name"]; ?></td>
+                                        <td> <?php echo $row["gender"]; ?></td>
+                                        <td> <?php echo $row["address"]; ?></td>
+                                        <td>
+                                            <?php echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>"; ?>
+                                            <?php echo "<a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>"; ?>
+                                            <?php echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>"; ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                                
+                                </tbody>                            
+                        </table>                      
+                </div>
+                <?php $result->close(); ?>  
             </div>        
         </div>
     </div>
