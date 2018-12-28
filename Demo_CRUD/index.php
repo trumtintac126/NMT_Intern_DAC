@@ -1,10 +1,31 @@
 <?php
     session_start();
     require_once "config.php";
-    $sql = "SELECT * FROM customers";
-    if($result = $conn->query($sql)){
+    //paging
 
+    //total record in table
+    $result = mysqli_query($conn, 'SELECT count(id) as total from customers');
+    $row = $result->fetch_assoc();
+    $total_records = $row['total'];
+
+    //LIMIT VÀ CURRENT_PAGE
+    $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $limit = 2;
+
+    //total page
+    $total_page = ceil($total_records / $limit);
+
+    if ($current_page > $total_page){
+        $current_page = $total_page;
     }
+    else if ($current_page < 1){
+        $current_page = 1;
+    }
+
+    $start = ($current_page - 1) * $limit;
+
+    $result = mysqli_query($conn, "SELECT * FROM customers LIMIT $start, $limit");
+
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -47,7 +68,7 @@
                                     echo "<h2>No record in table</h2>";
                                 } ?>
                                 <tbody>
-                                <?php while($row = mysqli_fetch_array($result)){ ?>
+                                <?php while($row = mysqli_fetch_assoc($result)){ ?>
                                    <tr>
                                         <td> <?php echo $row["id"]; ?> </td>
                                         <td> <?php echo $row["email"]; ?> </td>
@@ -64,7 +85,17 @@
                                 <?php } ?>
                                 
                                 </tbody>                            
-                        </table>                      
+                        </table>
+
+                        <ul class="pagination">
+                            <?php
+                                for($i=1;$i<=$total_page;$i++){ ?>
+                                <li 
+                                    <?php if($current_page == $i) echo "class='active'"; ?>> 
+                                    <a href="index.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                </li>
+                            <?php } ?>
+                        </ul>                                               
                 </div>
                 <?php $result->close(); ?>  
             </div>        
