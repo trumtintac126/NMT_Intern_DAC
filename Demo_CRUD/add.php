@@ -5,7 +5,6 @@
     $emailErr = $passwordErr = $genderErr = $first_nameErr = $last_nameErr = $addressErr = "";
     $email = $password = $first_name = $last_name = $gender = $address ="";
     
-    // Processing form data when form is submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if (empty($_POST["password"])) {
@@ -17,10 +16,37 @@
         if (empty($_POST["email"])) {
             $emailErr = "Email must enter";
         } else {
-            $email = test_input($_POST["email"]);
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $emailErr = "Invalid email format"; 
+            $sql = "SELECT id from customers where email =?";
+
+            if($stmt = $conn->prepare($sql)){
+
+                $stmt ->bind_param("s",$param_email);
+
+                $param_email = test_input($_POST["email"]);
+
+                if($stmt ->execute()){
+
+                    $stmt->store_result();
+
+                    if($stmt->num_rows == 1){
+
+                        $emailErr = "This username is already taken.";
+                    }else{
+
+                        $email = test_input($_POST["email"]);
+                        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                            $emailErr = "Invalid email format"; 
+                            }
+                    }
+                }else{
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
             }
+            $stmt ->close();           
+            //$email = test_input($_POST["email"]);
+            // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            // $emailErr = "Invalid email format"; 
+            // }
         }
 
         if (empty($_POST["first_name"])) {
@@ -61,6 +87,8 @@
         return $data;
     }
 
+
+
     if(!empty($email) && !empty($password)){
 
         $sql = "INSERT INTO customers (email, password, first_name, last_name, gender, address) VALUES (?, ?, ?, ?, ?, ?)";
@@ -84,7 +112,6 @@
         }
         $stmt ->close();
     }
-    // Close connection
     $conn->close();
 ?>
  
