@@ -27,6 +27,7 @@
                         <h2>Hello <?php echo $_SESSION["email"]; ?> </h2>
                         <h2 class="pull-left">Employees Details</h2> <span></span>
                         <a href="add.php" class="btn btn-success pull-right">Add New Employee</a>
+                        <a href="logout.php" class="btn btn-default pull-right">Logout</a>
                     </div>
                         <table class='table table-bordered table-striped'>
                                 <?php if($result ->num_rows >0 ) { ?>
@@ -48,7 +49,6 @@
                                 <tbody>
                                 <?php while($row = mysqli_fetch_array($result)){ ?>
                                    <tr>
-
                                         <td> <?php echo $row["id"]; ?> </td>
                                         <td> <?php echo $row["email"]; ?> </td>
                                         <td> <?php echo $row["first_name"]; ?></td>

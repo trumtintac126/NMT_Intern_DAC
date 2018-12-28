@@ -1,5 +1,13 @@
 <?php
     
+    session_start();
+
+    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+        header("location: index.php");
+        exit;
+    }
+
+
     require_once "config.php";
     
     $email = $password = "";
@@ -43,11 +51,17 @@
 
                     $stmt->store_result();
 
-                    if(mysqli_stmt_num_rows($stmt) == 1){ 
+                    if($stmt->num_rows == 1){ 
                         
                         echo "Login success";
 
                         $stmt->bind_result($id, $email, $password);
+
+                        session_start();
+                            
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["id"] = $id;
+                            $_SESSION["email"] = $email;  
 
                         header("location:" ."index.php");
 

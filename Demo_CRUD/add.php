@@ -1,5 +1,5 @@
 <?php
-
+  
     require_once "config.php";
 
     $emailErr = $passwordErr = $genderErr = $first_nameErr = $last_nameErr = $addressErr = "";
@@ -43,10 +43,6 @@
                 }
             }
             $stmt ->close();           
-            //$email = test_input($_POST["email"]);
-            // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            // $emailErr = "Invalid email format"; 
-            // }
         }
 
         if (empty($_POST["first_name"])) {
@@ -122,6 +118,11 @@
     <title>Add customers</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <script>
+      function callback(){
+          history.back();
+      }
+  </script>
 </head>
 <body>
     <div class="wrapper-add">
@@ -162,7 +163,7 @@
                             <input type="text" name="address" class="form-control" value="<?php echo $address; ?>">
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="index.php" class="btn btn-default">Cancel</a>
+                        <button type="button" class="btn btn-danger" onclick="callback()">Cancel</button>                       
                     </form>
                 </div>
             </div>        

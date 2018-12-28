@@ -1,8 +1,12 @@
 <?php
+
+    session_start();
+    if(!isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] !== true){
+        header("location: login.php");
+    }
+    require_once "config.php";
+
     if(isset($_POST["id"]) && !empty($_POST["id"])){
-
-
-        require_once "config.php";
         
         $sql = "DELETE FROM customers WHERE id = ?";
         
@@ -50,7 +54,7 @@
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="alert alert-danger fade in">
                             <input type="hidden" name="id" value="<?php echo trim($_GET["id"]); ?>"/>
-                            <p>Are you sure you want to delete this record?</p><br>
+                            <p>Are you sure you want to delete ID = <?php echo trim($_GET["id"]); ?></p><br>
                             <p>
                                 <input type="submit" value="Yes" class="btn btn-danger">
                                 <a href="index.php" class="btn btn-default">No</a>

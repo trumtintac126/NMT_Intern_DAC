@@ -1,8 +1,13 @@
 <?php
+    session_start();
+    if(!isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] !== true){
+        header("location: login.php");
+    }
+    require_once "config.php";
+
     if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
 
-        require_once "config.php";
-        
+                
         $sql = "SELECT * FROM customers WHERE id = ?";
         
         if($stmt = $conn->prepare($sql)){
