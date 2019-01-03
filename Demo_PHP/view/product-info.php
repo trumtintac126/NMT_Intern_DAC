@@ -1,6 +1,6 @@
 <?php 
-include '../view/header.php'; 
-include '../view/sidebar_left.php'; 
+include 'header.php'; 
+include 'sidebar_left.php'; 
 ?>
 <div class="col-md-10">
 	<div class="panel panel-default col-md-6 col-md-offset-3">
@@ -67,5 +67,5 @@ include '../view/sidebar_left.php';
 </div>
 
 <?php 
-include '../view/footer.php'; 
+include 'footer.php'; 
 ?>

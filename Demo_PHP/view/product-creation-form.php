@@ -1,6 +1,7 @@
 <?php 
-include '../view/header.php'; 
-include '../view/sidebar_left.php'; 
+include 'header.php'; 
+include 'sidebar_left.php';
+
 ?>
 <div class="col-md-10">
 	<div class="panel panel-default col-md-6 col-md-offset-3">
@@ -38,7 +39,10 @@ include '../view/sidebar_left.php';
                         <label>Ảnh</label>
                         <input type="file" name="file1" id="anh" min="0" class="form-control" >
                     </div>
-
+                    <div class="form-group">
+                         <input type="hidden" name="email" id="email" class="form-control" 
+                          value ="<?php echo $_SESSION['email'] ?>" readonly>
+                    </div>
                     <div align="center">
                         <input type="submit" class="btn btn-primary" value="Thêm mới"/>
                         <button class="btn btn-danger" onclick="callback()">Hủy</button>
@@ -51,5 +55,5 @@ include '../view/sidebar_left.php';
 </div>
 
 <?php 
-include '../view/footer.php'; 
+include 'footer.php'; 
 ?>

@@ -2,7 +2,7 @@
 
 function getAllProduct(){
     global $db;
-    $sql = 'SELECT * FROM products ORDER BY Id DESC';
+    $sql = "SELECT p.*,u.FullName FROM products as p join users as u on u.Id = p.User_id  ORDER BY p.Id DESC";
     $result = $db->query($sql);
     return $result;
 }
@@ -35,10 +35,10 @@ $query = "UPDATE products SET Status = '0' WHERE Id ='$id'";
 $db->exec($query);
 }
 
-function addProduct($categoryId,$name,$description,$price,$quantity,$image, $status){
+function addProduct($categoryId,$name,$description,$price,$quantity,$image, $status,$user_id){
 global $db;
-$query = "INSERT INTO products(Category_id,Name,Description,Price,Quantity,Image,Status) 
-    VALUE('$categoryId','$name','$description','$price','$quantity','$image','$status')";
+$query = "INSERT INTO products(Category_id,Name,Description,Price,Quantity,Image,Status,User_Id) 
+    VALUE('$categoryId','$name','$description','$price','$quantity','$image','$status','$user_id')";
 $db->exec($query);
 }
 

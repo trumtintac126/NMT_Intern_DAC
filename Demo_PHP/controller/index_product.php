@@ -1,5 +1,5 @@
 <?php
-
+require('../model/user_db.php');
 require('../model/connect.php');
 require('../model/product_db.php');
 require('../model/category_db.php');
@@ -89,7 +89,13 @@ switch ($action) {
             $image = '94621052018.jpg';
         }
 
-        addProduct($categoryId,$name,$description,$price,$quantity,$image,$status);
+        //erro
+        // $email = (string)$_POST["email"];
+        //$user_id = getIdByEmail($email);
+        
+         $user_id = 1;
+        // $group_id = 1;
+        addProduct($categoryId,$name,$description,$price,$quantity,$image,$status,$user_id);
         phpAlert("Thêm thành công");
         $products = getAllProduct();
         include '../view/product-management.php';
