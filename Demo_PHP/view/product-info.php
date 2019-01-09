@@ -1,6 +1,6 @@
 <?php 
-include 'header.php'; 
-include 'sidebar_left.php'; 
+include '../view/header.php'; 
+include '../view/sidebar_left.php'; 
 ?>
 <div class="col-md-10">
 	<div class="panel panel-default col-md-6 col-md-offset-3">
@@ -45,8 +45,7 @@ include 'sidebar_left.php';
                     </div>
                     <div class="form-group">
                         <label>Chi tiết</label>
-                        <input type="text" name="description" id="description" class="form-control" 
-                          value="<?php echo $product['Description'] ?>" required>
+                        <textarea type="text" name="description" id="description" class="form-control"><?php echo $product['Description'] ?></textarea>  
                     </div>
                     <div class="form-group">
                         <label>Giá</label>
@@ -59,6 +58,7 @@ include 'sidebar_left.php';
                           value="<?php echo $product['Quantity'] ?>">
                     </div>
                     <input type="submit" class="btn btn-primary" value="Cập nhập"/>
+                    <button class="btn btn-danger" onclick="callback()">Hủy</button>
                 </form>  
 
   		</div>
@@ -67,5 +67,5 @@ include 'sidebar_left.php';
 </div>
 
 <?php 
-include 'footer.php'; 
+include '../view/footer.php'; 
 ?>

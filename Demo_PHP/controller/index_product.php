@@ -54,13 +54,18 @@ switch ($action) {
         phpAlert("Bạn đã cập nhật thành công");
         header("location:" ."../controller/index_product.php?action=product_list");
         break;
-    case 'delete':
+    case 'active':
         $id = $_GET["id"];
-        deleteProduct($id);
-        phpAlert("Bạn đã xóa thành công");
+        ativeProduct($id);
         $products = getAllProduct();
         include '../view/product-management.php';
         break;
+    case 'nonActive':
+        $id = $_GET["id"];
+        nonAtiveProduct($id);
+        $products = getAllProduct();
+        include '../view/product-management.php';
+        break;       
     case 'creationForm':
         $categories = getAllCategory();
         include '../view/product-creation-form.php';
@@ -89,13 +94,11 @@ switch ($action) {
             $image = '94621052018.jpg';
         }
 
-        //erro
-        // $email = (string)$_POST["email"];
-        //$user_id = getIdByEmail($email);
-        
-         $user_id = 1;
-        // $group_id = 1;
-        addProduct($categoryId,$name,$description,$price,$quantity,$image,$status,$user_id);
+        $email = (string)$_POST["email"];
+        $user_id = getIdByEmail($email);
+        $group_id = getGroupIdByEmail($email);
+
+        addProduct($categoryId,$name,$description,$price,$quantity,$image,$status,$user_id,$group_id);
         phpAlert("Thêm thành công");
         $products = getAllProduct();
         include '../view/product-management.php';

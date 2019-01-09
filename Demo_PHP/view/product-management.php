@@ -52,24 +52,26 @@ include 'sidebar_left.php';
                     <th>Giá</th>
                     <th>Số lượng</th>
                     <th>Nhân viên phụ trách</th>
+                    <th>Nhóm nhân viên</th>
                     <th>Tình trạng</th>
-                    <th>Tác vụ</th>
+                    <th>Tác vụ</th>                    
                 </tr>
             	</thead>
                 <?php foreach ($products as $product) { ?>    
                     <tr>
                         <td><?php echo $product['Id']; ?></td>
-                        <td><?php echo $product['Category_id']; ?></td>
+                        <td><?php echo $product['CategoryName']; ?></td>
                         <td><?php echo $product['Name']; ?></td>
                         <td><img src="view/images/<?php echo $product['Image'];?>" width = "50px" height="50px"/></td>
                         <td><?php echo $product['Description']; ?></td>
                         <td><?php echo $product['Price']; ?></td>
                         <td><?php echo $product['Quantity']; ?></td>
                         <td><?php echo $product['FullName']; ?></td>
+                        <td><?php echo $product['GroupName']; ?></td>
                         <td>
                             <?php 
                                 if($product['Status'] == 1){
-                                    echo '<span class="label label-info">Hiện</span>';
+                                    echo '<span class="label label-info" >Hiện</span>';
                                 }else{
                                     echo '<span class="label label-danger">Ẩn</span>';
                                 }
@@ -80,21 +82,22 @@ include 'sidebar_left.php';
                                 href="controller/index_product.php?action=product_info&id=<?php echo $product['Id']; ?>">
                                 Chi tiết
                             </a>
-                            <a class="btn btn-danger btn-sm" 
-                                href="controller/index_product.php?action=product_active&id=<?php echo $product['Id']; ?>">
-                                <?php 
-                                if($product['Status'] == 1){
-                                    echo 'Active';
-                                }else{
-                                    echo 'NonActive';
-                                }
+                            <?php 
+                                 if($product['Status'] == 1){                                   
                             ?>
+                                <a class="btn btn-danger btn-sm" 
+                                href="controller/index_product.php?action=active&id=<?php echo $product['Id']; ?>">
+                                <?php echo 'Active';?>
+                            <?php }else{?>
+                                <a class="btn btn-danger btn-sm" 
+                                href="controller/index_product.php?action=nonActive&id=<?php echo $product['Id']; ?>">
+                                <?php echo 'NonActive';?>
+                            <?php }?>
                             </a>
                         </td>
                     </tr>
                 <?php } ?>
-            </table>
-
+            </table>                         
   		</div>
 	</div>
 </div>

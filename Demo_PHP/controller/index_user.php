@@ -19,11 +19,22 @@ switch ($action) {
         $password = $_POST["password"];
         $result = getUser($email, $password);
         if (!empty($result)) {
-
             session_start();
             $_SESSION['email'] = $email;
             $_SESSION["loggedin"] = true;
+
+            if($result['Role_Id'] == 1) {                
+                $_SESSION['role'] = 'admin';               
+            }else if ($result['Role_Id'] == 2) {
+                $_SESSION['role'] = 'leader';
+            }else if ($result['Role_Id'] == 3) {
+                $_SESSION['role'] = 'employee';
+            }else{
+                phpAlert('Bạn không có quyền truy cập');
+                include '../view/login.php';
+            } 
             header("location: ../view/home.php");
+           
         } else {
             phpAlert('Sai Tên Đăng Nhập hoặc Mật Khẩu');
             include '../view/login.php';
@@ -33,21 +44,22 @@ switch ($action) {
         session_start();
         session_destroy();
         include '../view/login.php';
-        phpAlert('Bạn đã đăng xuất thành công');
         break;
      case 'user_list':
         $users = getAllUser();
+        
         include '../view/user-management.php';
         break;
     case 'user_info':
         $id = $_GET["id"];
         $user = getUserById($id);
+        $groups = getAllGroup();
+        $roles = getAllRole();       
         include '../view/user-info.php';
         break;
     case 'update_info':
         $id = $_POST["id"];
         $email = $_POST["email"];
-        // $role = $_POST["role_id"];
         $fullname = $_POST["fullname"];
         $status = $_POST["status"];
 
@@ -64,7 +76,8 @@ switch ($action) {
             }
             $avatar = $timestamp . $user_file;
             } else {
-                $avatar = '94621052018.jpg';
+                $user = getUserById($id);
+                $avatar = $user['Avatar'];
             }
         $modified = date("Y") . date("m") . date("d");
 
@@ -82,7 +95,6 @@ switch ($action) {
         if(empty(getEmailByUser($_POST["email"]))){
             $email = $_POST["email"];
             $password = $_POST["password"];
-            // $role = $_POST["role_id"];
             $fullname = $_POST["fullname"];
             $status = 1;
 

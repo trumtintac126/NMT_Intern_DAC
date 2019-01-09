@@ -1,9 +1,9 @@
 <?php 
-include '../view/header.php'; 
-include '../view/sidebar_left.php'; 
+include 'header.php'; 
+include 'sidebar_left.php'; 
 ?>
 <div class="col-md-10">
-	<div class="panel panel-default col-md-6 col-md-offset-3">
+	<div class="panel panel-default col-md-6 col-md-offset-1">
   		<div class="panel-body">
         <h3 class="text-center"><b>Thông tin cá nhân</b></h3>
   			<form action="controller/index_user.php?action=update_info" method="post" enctype="multipart/form-data">
@@ -17,6 +17,36 @@ include '../view/sidebar_left.php';
                         <label>Tên truy cập</label>
                         <input type="text" name="email" id="email" class="form-control" 
                           value="<?php echo $user['Email'] ?>" readonly>
+                    </div>
+                    <div class ="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Nhóm</label>
+                          <input type="text" class="form-control" 
+                            value="<?php echo $user['groupName'] ?>" readonly>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label>Thay đổi nhóm</label>
+                          <select name="category_id" class="form-control">
+                              <?php foreach ($groups as $group) {?>
+                              <option value="<?php echo $group['Id']; ?>"><?php echo $group['Name']; ?></option>
+                              <?php } ?>
+                          </select>
+                        </div>
+                    </div>
+                    <div class ="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Quyền</label>
+                          <input type="text" class="form-control" 
+                            value="<?php echo $user['roleName']  ?>" readonly>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label>Thay đổi quyền</label>
+                          <select name="category_id" class="form-control">
+                          <?php foreach ($roles as $role) {?>
+                            <option value="<?php echo $role['Id']; ?>"><?php echo $role['Name']; ?></option>
+                            <?php } ?>
+                          </select>
+                        </div>
                     </div>
                     <div class="form-group">
                       <label>Tình trạng</label>
@@ -47,6 +77,7 @@ include '../view/sidebar_left.php';
                     </div>
 
                     <input type="submit" class="btn btn-primary" value="Cập nhật"/>
+                    <button class="btn btn-danger" onclick="callback()">Hủy</button>
                 </form>  
 
   		</div>
@@ -55,5 +86,5 @@ include '../view/sidebar_left.php';
 </div>
 
 <?php 
-include '../view/footer.php'; 
+include 'view/footer.php'; 
 ?>
