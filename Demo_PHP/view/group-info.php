@@ -2,6 +2,7 @@
 include 'header.php'; 
 include 'sidebar_left.php'; 
 ?>
+<?php if( $_SESSION['role'] == 'admin'){ ?>
 <div class="col-md-10">
 	<div class="panel panel-default col-md-6 col-md-offset-3">
   		<div class="panel-body">
@@ -41,7 +42,8 @@ include 'sidebar_left.php';
 	</div>
 
 </div>
-
+<?php }else{ echo "ban khong co quyen truy cap" ?>
+<?php }?>
 <?php 
 include 'footer.php'; 
 ?>

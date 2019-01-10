@@ -13,7 +13,9 @@ if (isset($_POST["action"])) {
 }
 switch ($action) {
      case 'product_list':
-        $products = getAllProduct();
+        $products = getAll();
+        $total_page = getTotalRecord();
+        $current_page = getPage();
         $categories = getAllCategory();
         include '../view/product-management.php';
         break;

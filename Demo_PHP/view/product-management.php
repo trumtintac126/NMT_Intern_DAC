@@ -42,6 +42,7 @@ include 'sidebar_left.php';
                 <div class="col-md-4"><p>Tác vụ</p> <a class="btn btn-success btn-sm" href="controller/index_product.php?action=creationForm">Thêm mới <span class="glyphicon glyphicon-plus"></span></a></div>
             </div>                        
   			<table  class="table table-hover" id="tableList">
+              <?php if($products != null) {?>
   				<thead>
                 <tr>
                     <th>Mã</th>
@@ -57,6 +58,8 @@ include 'sidebar_left.php';
                     <th>Tác vụ</th>                    
                 </tr>
             	</thead>
+              <?php }else{ ?>
+              <?php echo "<h2>Không có sản phẩm</h2>"; }?>
                 <?php foreach ($products as $product) { ?>    
                     <tr>
                         <td><?php echo $product['Id']; ?></td>
@@ -77,7 +80,8 @@ include 'sidebar_left.php';
                                 }
                             ?>
                         </td>
-                        <td>
+                        <td>  
+                            <?php if($_SESSION['role'] == 'admin' OR $_SESSION['role'] == 'leader'){ ?>                              
                             <a class="btn btn-primary btn-sm" 
                                 href="controller/index_product.php?action=product_info&id=<?php echo $product['Id']; ?>">
                                 Chi tiết
@@ -94,10 +98,20 @@ include 'sidebar_left.php';
                                 <?php echo 'NonActive';?>
                             <?php }?>
                             </a>
+                            <?php }else { ?>
+                                <span class="label label-warning">Không quyền</span>
+                            <?php }?>
                         </td>
                     </tr>
                 <?php } ?>
-            </table>                         
+            </table> 
+            <ul class="pagination">
+                <?php for($i=1;$i<=$total_page;$i++){?>
+                        <li <?php if($current_page == $i) echo "class='active'"; ?>> 
+                            <a href="/product-management.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                <?php } ?>
+            </ul>                                    
   		</div>
 	</div>
 </div>
