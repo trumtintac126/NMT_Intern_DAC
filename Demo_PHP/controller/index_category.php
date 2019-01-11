@@ -28,7 +28,6 @@ switch ($action) {
     	$name = $_POST["name"];
     	$status = $_POST["stauts"];
     	updateCategory($id,$name,$status);
-    	// phpAlert("Bạn đã chỉnh sửa thành công");
     	$categories = getAllCategory();
         include '../view/category-management.php';
     	break;

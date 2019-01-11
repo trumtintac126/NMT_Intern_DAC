@@ -13,11 +13,12 @@ if (isset($_POST["action"])) {
 }
 switch ($action) {
      case 'product_list':
-        $products = getAll();
-        $total_page = getTotalRecord();
-        $current_page = getPage();
+        $products = getAllProduct();
+        // $total_page = getTotalRecord();
+        // $current_page = getPage();
         $categories = getAllCategory();
         include '../view/product-management.php';
+        //include '../view/test_product_managerment.php';
         break;
     case 'product_info':
     	$id = $_GET['id'];

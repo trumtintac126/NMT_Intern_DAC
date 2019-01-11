@@ -1,9 +1,9 @@
 <?php
-
 require('../model/connect.php');
 require('../model/user_db.php');
 require('../model/role_db.php');
 require('../model/group_db.php');
+require('../model/group-users_db.php');
 
 if (isset($_POST["action"])) {
     $action = $_POST['action'];
@@ -22,6 +22,7 @@ switch ($action) {
             session_start();
             $_SESSION['email'] = $email;
             $_SESSION["loggedin"] = true;
+            $_SESSION["group_Id"] = getGroupIdByEmail($email);
 
             if($result['Role_Id'] == 1) {                
                 $_SESSION['role'] = 'admin';               
@@ -45,9 +46,8 @@ switch ($action) {
         session_destroy();
         include '../view/login.php';
         break;
-     case 'user_list':
-        $users = getAllUser();
-        
+     case 'user_list':      
+        $users = getAllUser();     
         include '../view/user-management.php';
         break;
     case 'user_info':
@@ -111,17 +111,36 @@ switch ($action) {
                 }
                 $avatar = $timestamp . $user_file;
             } else {
-                $avatar = '94621052018.jpg';
+                $avatar = '49236708_545300672619062_3672773018964197376_n.jpg';
             }
             $created = date("Y") . date("m") . date("d");
+
             addUser($email,$password,$created,$avatar,$status,$fullname);
+
+            $user_id = getIdByEmail($email);
+            $group_id = $_POST["group_id"];
+            $role_id = $_POST["role_id"];
+
+            addGroupUsers($user_id,$group_id,$role_id);
             phpAlert("Bạn đã thêm thành công");
             $users = getAllUser();
             include '../view/user-management.php';        
         }else{
-            phpAlert("Email đã tồn tại");
-            include '../view/user-creation-form.php';
+            header("location:" ."../controller/index_user.php?action=creationForm"); 
+            phpAlert("Email đã tồn tại");          
         }               
         break;
+        case 'active':
+        $id = $_GET["id"];
+        ativeUser($id);
+        $users = getAllUser();
+        include '../view/user-management.php';
+        break;
+        case 'nonActive':
+        $id = $_GET["id"];
+        nonAtiveUser($id);
+        $users = getAllUser();
+        include '../view/user-management.php';
+        break;       
 }
 ?>

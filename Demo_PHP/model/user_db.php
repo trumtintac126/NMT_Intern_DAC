@@ -53,7 +53,6 @@
 		global $db;
 		$query = "INSERT INTO users(Email,Password,Created,Avatar,Status,Fullname) VALUE('$email','$password','$created','$avatar','$status','$fullname')";
 		$db->exec($query);
-		// $query = "INSERT INTO group_users(Role_Id,Group_Id,Created,Avatar,Status,Fullname) VALUE('$email','$password','$created','$avatar','$status','$fullname')";	
 	}
 
 ?>

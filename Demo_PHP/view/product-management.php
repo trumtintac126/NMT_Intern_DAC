@@ -81,7 +81,8 @@ include 'sidebar_left.php';
                             ?>
                         </td>
                         <td>  
-                            <?php if($_SESSION['role'] == 'admin' OR $_SESSION['role'] == 'leader'){ ?>                              
+                            <?php
+                            if($_SESSION['role'] == 'admin' OR ($_SESSION['role'] == 'leader' AND $_SESSION['group_Id'] == $product['Group_id'])){ ?>                              
                             <a class="btn btn-primary btn-sm" 
                                 href="controller/index_product.php?action=product_info&id=<?php echo $product['Id']; ?>">
                                 Chi tiết
@@ -104,14 +105,7 @@ include 'sidebar_left.php';
                         </td>
                     </tr>
                 <?php } ?>
-            </table> 
-            <ul class="pagination">
-                <?php for($i=1;$i<=$total_page;$i++){?>
-                        <li <?php if($current_page == $i) echo "class='active'"; ?>> 
-                            <a href="/product-management.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                        </li>
-                <?php } ?>
-            </ul>                                    
+            </table>                                   -->
   		</div>
 	</div>
 </div>
