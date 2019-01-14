@@ -1,6 +1,6 @@
 <?php 
 include 'header.php'; 
-include 'sidebar_left.php'; 
+include 'sidebar_left.php';
 ?>
 <div class="col-md-10">
 	<div class="panel panel-default">
@@ -105,7 +105,14 @@ include 'sidebar_left.php';
                         </td>
                     </tr>
                 <?php } ?>
-            </table>                                   -->
+            </table> 
+            <ul class="pagination">
+                <?php for($i=1;$i<=$total_page;$i++){?>
+                        <li <?php if($current_page == $i) echo "class='active'"; ?>> 
+                            <a href="controller/index_product.php?action=product_list&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                <?php } ?>
+            </ul>                                    
   		</div>
 	</div>
 </div>

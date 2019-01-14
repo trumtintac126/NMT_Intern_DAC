@@ -13,12 +13,11 @@ if (isset($_POST["action"])) {
 }
 switch ($action) {
      case 'product_list':
-        $products = getAllProduct();
-        // $total_page = getTotalRecord();
-        // $current_page = getPage();
+        $products = getAll();
+        $total_page = getTotalRecord();
+        $current_page = getPage();
         $categories = getAllCategory();
         include '../view/product-management.php';
-        //include '../view/test_product_managerment.php';
         break;
     case 'product_info':
     	$id = $_GET['id'];
@@ -104,7 +103,7 @@ switch ($action) {
         addProduct($categoryId,$name,$description,$price,$quantity,$image,$status,$user_id,$group_id);
         phpAlert("Thêm thành công");
         $products = getAllProduct();
-        include '../view/product-management.php';
+        header("location:" ."../controller/index_product.php?action=product_list");
         break;
     case 'active':
         break;

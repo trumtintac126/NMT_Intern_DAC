@@ -1,13 +1,88 @@
 <?php
 
-function getAllProduct(){
+function getTotalRecord(){
     global $db;
+    $sql = 'SELECT count(p.Id) as total from products as p join users as u on u.Id = p.User_id 
+    join categories as c on c.Id = p.Category_id
+    join groups as g on g.Id = p.Group_id
+    ORDER BY p.Id DESC';
+    $query = $db->query($sql);
+    $result = $query->fetch();
+
+    $total_records = $result['total'];
+
+    $limit = 5;
+
+    $total_page = ceil($total_records / $limit);
+    
+    return $total_page;
+}
+
+function getPage(){
+
+    global $db;
+    $sql = 'SELECT count(p.Id) as total from products as p join users as u on u.Id = p.User_id 
+    join categories as c on c.Id = p.Category_id
+    join groups as g on g.Id = p.Group_id
+    ORDER BY p.Id DESC';
+    $query = $db->query($sql);
+    $result = $query->fetch();
+
+    $total_records = $result['total'];
+
+    $limit = 5;
+
+    $total_page = ceil($total_records / $limit);
+
+    $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+    if ($current_page > $total_page){
+        $current_page = $total_page;
+    }
+    else if ($current_page < 1){
+        $current_page = 1;
+    }
+
+    $start = ($current_page - 1) * $limit;
+
+    return $start;
+}
+
+function getAll(){
+
+    global $db;
+    $sql = 'SELECT count(p.Id) as total from products as p join users as u on u.Id = p.User_id 
+    join categories as c on c.Id = p.Category_id
+    join groups as g on g.Id = p.Group_id
+    ORDER BY p.Id DESC';
+    $query = $db->query($sql);
+    $result = $query->fetch();
+
+    $total_records = $result['total'];
+   
+    $limit = 5;
+
+    $total_page = ceil($total_records / $limit);
+
+    $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+    if ($current_page > $total_page){
+        $current_page = $total_page;
+    }
+    else if ($current_page < 1){
+        $current_page = 1;
+    }
+
+    $start = ($current_page - 1) * $limit;
+
     $sql = "SELECT p.*,u.FullName,c.Name as CategoryName,g.Name as GroupName FROM products as p join users as u on u.Id = p.User_id 
-            join categories as c on c.Id = p.Category_id
-            join groups as g on g.Id = p.Group_id          
-            ORDER BY g.Id DESC";
+    join categories as c on c.Id = p.Category_id
+    join groups as g on g.Id = p.Group_id  
+    LIMIT $start, $limit ";
+
     $result = $db->query($sql);
     return $result;
+
 }
 
 function getProductById($id){
