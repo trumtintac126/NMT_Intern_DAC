@@ -8,7 +8,11 @@ include 'sidebar_left.php';
   		<div class="panel-body">
         <h3 class="text-center"><b>Thông tin nhóm</b></h3>
   			<form action="controller/index_group.php" method="post" >
-                    <input type="hidden" name="action" value="update_info">
+                    <input type="hidden" name="action" value="update_group_info">
+                    <div class="form-group">
+                        <input type="text" name="id" id="id" class="form-control" 
+                          value="<?php echo $group['Id'] ?>" readonly>
+                    </div>
                     <div class="form-group">
                         <label>Tên nhóm</label>
                         <input type="text" name="name" id="name" class="form-control" 
@@ -34,8 +38,24 @@ include 'sidebar_left.php';
                             <?php } ?>
                         </div>
                     </div>
-                    <input type="submit" class="btn btn-primary" value="Cập nhập"/>
-                    <button class="btn btn-danger" onclick="callback()">Hủy</button>
+                        
+                    <div class="form-group">
+                        <label for="members" >Thêm thành viên vào nhóm</label>
+                        <div class="col-sm-10">
+                            <?php foreach ($usernogroup as $user) { ?>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="useringroup[]" value='<?php echo $user['Id'] ?>'>
+                                    <?php echo ($user['Email']) ?>
+                                </label>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                    <div> 
+                        <input type="submit" class="btn btn-primary" value="Cập nhập"/>
+                        <button class="btn btn-danger" onclick="callback()">Quay về</button>
+                    </div>
                 </form>  
 
   		</div>
